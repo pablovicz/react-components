@@ -1,8 +1,7 @@
 import { Box } from "@chakra-ui/react";
-import { NavOptions } from "../../routes";
-
-
 import { SidebarNav } from "./SidebarNav";
+//import { NavOptions } from "../../routes";
+
 
 export function Sidebar() {
     return (

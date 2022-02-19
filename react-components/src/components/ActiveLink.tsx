@@ -5,11 +5,22 @@ import { NavLink, NavLinkProps } from "react-router-dom";
 
 interface ActiveLinkProps extends NavLinkProps{
     children: ReactElement  //precisa ser um elemento react, component react, necessariamente
-
+    colors: {
+        active: {
+            color: string;
+            hoverColor: string;
+            cursor: string;
+        } 
+        disabled: {
+            color: string;
+            hoverColor: string;
+            cursor: string;
+        } 
+    }
 }
 
 
-export function ActiveLink({ children, ...rest }: ActiveLinkProps) {
+export function ActiveLink({ children, colors, ...rest }: ActiveLinkProps) {
 
     const { pathname } = useLocation();
 
@@ -30,9 +41,9 @@ export function ActiveLink({ children, ...rest }: ActiveLinkProps) {
     return (
         <NavLink {...rest}>
             {cloneElement(children, {
-                color: isActive ? 'vivo.pink' : 'gray.400',
-                cursor: isActive ? 'none' : 'pointer',
-                _hover: isActive ? { color: "vivo.pink" } : { color: "vivo.purple" },
+                color: isActive ? colors.active.color : colors.disabled.color,
+                cursor: isActive ? colors.active.cursor : colors.disabled.cursor,
+                _hover: isActive ? { color: colors.active.hoverColor } : { color: colors.disabled.hoverColor },
             })}
         </NavLink>
     );

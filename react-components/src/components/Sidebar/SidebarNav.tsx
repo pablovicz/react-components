@@ -1,6 +1,5 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { ElementType } from "react";
-import { UserCanSee } from "../CanSee";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { useLocation } from 'react-router';
 
@@ -26,7 +25,7 @@ interface SidebarNavProps {
     simpleOptions?: navLink[];
 }
 
-const allRoles = ['ROLE_ADMIN', 'ROLE_BUSINESS', 'ROLE_DEV']
+
 
 
 export function SidebarNav({ sectionsOptions, simpleOptions }: SidebarNavProps) {
@@ -51,26 +50,22 @@ export function SidebarNav({ sectionsOptions, simpleOptions }: SidebarNavProps) 
                     <>
                         {
                             sectionsOptions.map(op => (
+                                <NavSection key={op.navSectionTitle} title={op.navSectionTitle}>
+                                    {
+                                        op.NavLinkList.map(link => (
+                                            !!link.roles ? (
 
+                                                <NavLink key={link.title} icon={link.icon} href={`${op.sectionPath}${link.href}`}>{link.title}</NavLink>
 
-                                <UserCanSee key={op.navSectionTitle} roles={!!op.roles ? op.roles : allRoles}>
-                                    <NavSection  title={op.navSectionTitle}>
-                                        {
-                                            op.NavLinkList.map(link => (
-                                                !!link.roles ? (
-
-                                                    <NavLink key={link.title} icon={link.icon} href={`${op.sectionPath}${link.href}`}>{link.title}</NavLink>
-
-                                                ) : (
-                                                    <NavLink key={link.title} icon={link.icon} href={`${op.sectionPath}${link.href}`}>{link.title}</NavLink>
-                                                )
-                                            ))
-                                        }
-                                    </NavSection>
-                                </UserCanSee>
+                                            ) : (
+                                                <NavLink key={link.title} icon={link.icon} href={`${op.sectionPath}${link.href}`}>{link.title}</NavLink>
+                                            )
+                                        ))
+                                    }
+                                </NavSection>
 
                             ))}
-                        </>
+                    </>
                 </>
             )}
 

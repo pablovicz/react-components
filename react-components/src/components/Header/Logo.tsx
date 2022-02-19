@@ -1,6 +1,6 @@
 import { Flex, Icon, Text } from "@chakra-ui/react";
 
-const Logo = require('../../assets/logo.png');
+const LogoImage = require('../../assets/logo.png');
 
 export function Logo() {
     return (
@@ -9,9 +9,9 @@ export function Logo() {
             align="center"
             justify="center"
         >
-            <img src={Logo} alt='Vivo' width={60} height={40}/>
+            <img src={LogoImage} alt='Vivo' width={60} height={40}/>
             <Flex flexDir="row" width={50} pl="2">
-                <Text color="gray.50" fontSize={36}  fontWeight="500">Seu Site</Text>
+                <Text color="gray.50" fontSize={36}  fontWeight="500">NOME</Text>
             </Flex>
         </Flex>
     );

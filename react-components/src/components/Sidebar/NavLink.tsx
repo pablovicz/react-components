@@ -12,7 +12,21 @@ interface NavLinkProps extends ChakraLinkProps {
 export function NavLink({ icon, children, href, ...rest }: NavLinkProps) {
 
     return (
-        <ActiveLink to={href} >
+        <ActiveLink
+            to={href}
+            colors={{ 
+                active: {
+                    color: "pink.500",
+                    hoverColor: "pink.500",
+                    cursor: "none"
+                },
+                disabled: {
+                    color: "gray.400",
+                    hoverColor: "purple",
+                    cursor: "pointer"
+                }
+            }}
+        >
             <ChakraLink
                 display="flex"
                 align="center"
