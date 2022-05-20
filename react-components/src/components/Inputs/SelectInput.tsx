@@ -1,5 +1,4 @@
 import { FieldError } from "react-hook-form";
-
 import {
     FormControl,
     FormLabel,
@@ -7,15 +6,14 @@ import {
     SelectProps as ChakraSelectInputProps
 } from "@chakra-ui/react";
 import { forwardRef, ForwardRefRenderFunction } from "react";
+import { RenderByCondition } from "../utils/RenderByCondition";
 
-type optionCustom = {
+export type optionCustom = {
     value: string | number;
     label: string | number;
 }
 
-
-
-interface SelectInputProps extends ChakraSelectInputProps {
+export interface SelectInputProps extends ChakraSelectInputProps {
     name: string;
     simpleOptions?: number[] | string[]
     richOptions?: optionCustom[];
@@ -23,25 +21,23 @@ interface SelectInputProps extends ChakraSelectInputProps {
     error?: FieldError;
 }
 
-
-
 const InputBase: ForwardRefRenderFunction<HTMLSelectElement, SelectInputProps> = ({ name, label, simpleOptions, richOptions, error = null, ...rest }, ref) => {
 
     return (
         <FormControl isInvalid={!!error}>
-            {
-                !!label && (
-                    <FormLabel htmlFor={name} color="gray.400" _focus={{ color: "vivo.pink" }} textAlign="left">{label}</FormLabel>
-                )
-            }
+            <RenderByCondition condition={!!label}>
+                <FormLabel htmlFor={name} color="gray.400" _focus={{ color: "vivo.pink" }} textAlign="left">{label}</FormLabel>
+            </RenderByCondition>
             <ChakraSelectInput
                 name={name}
                 _hover={{ bgColor: "gray.50", borderColor: "vivo.pink" }}
                 _focus={{ color: "vivo.pink", borderColor: "vivo.pink" }}
-                _disabled={{ bgColor: "gray.50", borderColor: "gray.400", color: "gray.300" , cursor: "not-allowed"}}
+                _disabled={{ bgColor: "gray.50", borderColor: "gray.400", color: "gray.300", cursor: "not-allowed" }}
+                textAlign="center"
                 ref={ref}
                 {...rest}
             >
+                <option disabled={true}>Selecione uma opcao...</option>
                 {richOptions && (
                     richOptions.map(op => (
                         <option key={op.value} value={op.value}>{op.label}</option>

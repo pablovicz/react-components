@@ -4,6 +4,8 @@ import {
     Input as ChakraInput, FormLabel, FormControl,
     InputProps as ChrakraInputProps, FormErrorMessage
 } from '@chakra-ui/react';
+import { RenderByCondition } from '../utils/RenderByCondition';
+
 
 interface InputProps extends ChrakraInputProps {
     name: string;
@@ -13,38 +15,31 @@ interface InputProps extends ChrakraInputProps {
 
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = ({ name, label, error = null, ...rest }, ref) => {
+
     return (
         <FormControl isInvalid={!!error}>
-            {
-                !!label && (
-                    <FormLabel
-                        htmlFor={name}
-                        color="gray.400"
-                        _focus={{ color: "vivo.pink" }}
-                    >
-                        {label}
-                    </FormLabel>
-                )
-            }
-
+            <RenderByCondition condition={!!label}>
+                <FormLabel htmlFor={name} color="gray.400" _focus={{ color: "vivo.pink" }}>
+                    {label}
+                </FormLabel>
+            </RenderByCondition>
             < ChakraInput
                 name={name}
                 focusBorderColor="vivo.pink"
                 variant="flushed"
-                bgColor="gray.50"
+                bgColor="none"
                 borderBottomColor="gray.300"
                 color="gray.400"
-                _hover={{ bgColor: "gray.50", borderBottomColor: "vivo.pink" }}
+                _hover={{ bgColor: "none", borderBottomColor: "vivo.pink" }}
                 _focus={{ color: "vivo.pink" }}
-                _disabled={{ bgColor: "gray.50", borderBottomColor: "gray.300", color: "gray.300"}}
+                _disabled={{ bgColor: "none", borderBottomColor: "gray.300", color: "gray.300" }}
                 size="md"
                 ref={ref}
                 {...rest}
             />
-
-            {!!error && (
-                <FormErrorMessage>{error.message}</FormErrorMessage>
-            )}
+            <RenderByCondition condition={!!error}>
+                <FormErrorMessage>{error?.message}</FormErrorMessage>
+            </RenderByCondition>
         </FormControl>
     )
 }

@@ -1,18 +1,14 @@
-import { Input as ChakraInput, HStack, FormControl, FormLabel, Icon, Flex } from "@chakra-ui/react";
+import { Input as ChakraInput, HStack, FormControl, FormLabel, Icon, Flex, InputProps } from "@chakra-ui/react";
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { RenderByCondition } from '../utils/RenderByCondition';
 
-
-interface SearchInputProps {
+export interface SearchInputProps extends InputProps {
     name: string;
     label?: string;
-    value?: string;
-    onChange: (value: string) => void;
 }
 
-
-
-export function SearchInput({ label, name, value, onChange }: SearchInputProps) {
+export function SearchInput({ label, name, ...rest }: SearchInputProps) {
 
     const [focusColor, setFocusColor] = useState("gray.400");
     const [iconSize, setIconSize] = useState("16");
@@ -35,17 +31,15 @@ export function SearchInput({ label, name, value, onChange }: SearchInputProps) 
             w="100%"
             h="100%"
         >
-            {
-                !!label && (
-                    <FormLabel
-                        htmlFor={name}
-                        color="gray.400"
-                        _focus={{ color: "vivo.pink" }}
-                    >
-                        {label}
-                    </FormLabel>
-                )
-            }
+            <RenderByCondition condition={!!label}>
+                <FormLabel
+                    htmlFor={name}
+                    color="gray.400"
+                    _focus={{ color: "vivo.pink" }}
+                >
+                    {label}
+                </FormLabel>
+            </RenderByCondition>
             <Flex
                 w="100%"
                 h={70}
@@ -71,13 +65,12 @@ export function SearchInput({ label, name, value, onChange }: SearchInputProps) 
                         w="100%"
                         h="100%"
                         name={name}
-                        value={value}
-                        onChange={(event) => onChange(event.target.value)}
                         variant="unstyled"
                         border="none"
                         size="md"
                         placeholder="buscar"
                         _placeholder={{ color: focusColor }}
+                        {...rest}
                     />
                     <Icon as={FiSearch} fontSize={iconSize} color={focusColor} />
 

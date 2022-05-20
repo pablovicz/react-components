@@ -10,6 +10,7 @@ import {
     NumberInputProps as ChakraNumberInputProps,
     NumberInputStepper,
 } from "@chakra-ui/react";
+import { RenderByCondition } from '../utils/RenderByCondition';
 
 
 interface NumberInputProps extends ChakraNumberInputProps {
@@ -23,17 +24,20 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, NumberInputProps> = 
 
     return (
         <FormControl>
-            <FormLabel
-                htmlFor={name}
-                color="gray.400"
-                _focus={{ color: "vivo.pink" }}
-                textAlign="left"
-            >
-                {label}
-            </FormLabel>
+            <RenderByCondition condition={!!label}>
+                <FormLabel
+                    htmlFor={name}
+                    color="gray.400"
+                    _focus={{ color: "vivo.pink" }}
+                    textAlign="left"
+                >
+                    {label}
+                </FormLabel>
+            </RenderByCondition>
             <ChakraNumberInput
                 name={name}
                 focusBorderColor="vivo.pink"
+                textAlign="center"
                 ref={ref}
                 {...rest}
             >
